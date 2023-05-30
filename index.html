@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Power Electronics Lab</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="../content/ejthemes/default-theme/ej.web.all.min.css"
+      rel="stylesheet"
+    />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link
+      href="http://cdn.syncfusion.com/18.3.0.47/js/web/flat-azure/ej.web.all.min.css"
+      rel="stylesheet"
+    />
+    <link href="js/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="../content/ejthemes/default-theme/ej.web.all.min.css"
+      rel="stylesheet"
+    />
+    <link href="../content/default.css" rel="stylesheet" />
+    <link href="../content/default-responsive.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+    <link href="new-style.css" rel="stylesheet" />
+    <script src="jquery/jquery.min.js"></script>
+    <script src="jquery/copyright.txt"></script>
+    <script src="jquery/jquery-ui.min.js"></script>
+    <script src="jquery/knockout-2.2.1.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="graph.js" type="text/javascript"></script>
+    <script src="http://cdn.syncfusion.com/js/assets/external/jquery-1.11.3.min.js"></script>
+    <script src="http://cdn.syncfusion.com/18.3.0.47/js/web/ej.web.all.min.js"></script>
+    <script src="../scripts/diagramscripts/diagramcommon.js"></script>
+    <script src="http://cdn.syncfusion.com/js/assets/external/jquery.easing.1.3.min.js"></script>
+    <script src="http://cdn.syncfusion.com/js/assets/external/jsrender.min.js"></script>
+    <script src="index.js" type="text/javascript"></script>
+
+    <style>
+      #left,
+      #mid,
+      #right {
+        width: unset;
+        height: unset;
+      }
+      #header {
+        width: 100%;
+      }
+      #exp-name {
+        width: 100%;
+      }
+      #main {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 15% 55% 30%;
+        padding: 10px;
+        gap: 1%;
+      }
+      .e-component {
+        display: flex;
+        justify-content: center;
+      }
+      .btn-func {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+      }
+      .comp-row {
+        display: grid;
+        grid-template-columns: 48% 48%;
+        gap: 4%;
+        padding: 1px;
+        margin: 3px;
+        margin-top: 10px;
+      }
+      .ele-name {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #diagram {
+        display: grid;
+        grid-template-rows: repeat(9, 1fr);
+        gap: 30px;
+        padding: 10px;
+        padding-top: 4vh;
+        height: 100%;
+      }
+      .dia-row {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 30px;
+      }
+      .custom-menu {
+        background-color: #f0e68cd0;
+
+        border-radius: 10px;
+        position: absolute;
+        padding: 2px;
+      }
+      .hell {
+        display: flex;
+        align-items: center;
+        margin: 5px;
+        height: 60px;
+        visibility: hidden;
+      }
+      .use {
+        height: 60px;
+        width: 60px;
+      }
+      .comp-ele {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="header">
+      <a href="http://vlab.co.in" class="logo">
+        <img src="img\vlabs-color-small-moe.png" alt="vlabs logo" />
+      </a>
+      <h2 id="labName">Power Electronics Lab</h2>
+    </header>
+    <div id="exp-name">
+      <h3>Bipolar PWM Single Phase Inverter (RL Load)</h3>
+    </div>
+    <div id="main">
+      <div id="left">
+        <div id="symbolpalette" style="border: 2px solid black">
+          <div
+            class="e-component"
+            style="height: 30px; margin: 3px; margin-top: 15px"
+          >
+            <span class=""><b> Electrical Components</b> </span>
+          </div>
+          <div class="components">
+            <div class="comp-row">
+              <div class="comp-ele">
+                <div
+                  class="ele-img resistor-sym"
+                  style="height: 4.5vh; width: 6.5vw"
+                >
+                  <img
+                    src="new-img/resistor.png"
+                    alt=""
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+                <div class="ele-name">Resistor</div>
+              </div>
+              <div class="comp-ele">
+                <div
+                  class="ele-img capacitor-sym"
+                  style="height: 4.5vh; width: 6.5vw"
+                >
+                  <img
+                    src="new-img/capacitor.png"
+                    alt=""
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+                <div class="ele-name">Capacitor</div>
+              </div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-ele">
+                <div
+                  class="ele-img inductor-sym"
+                  style="height: 4.5vh; width: 6.5vw"
+                >
+                  <img
+                    src="new-img/inductor.png"
+                    alt=""
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+                <div class="ele-name">Inductor</div>
+              </div>
+              <div class="comp-ele">
+                <div
+                  class="ele-img nom-sym"
+                  style="height: 4.5vh; width: 6.5vw"
+                >
+                  <img
+                    src="new-img/mosfetn - Copy.png"
+                    alt=""
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+                <div class="ele-name">Mosfet N</div>
+              </div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-ele">
+                <div class="ele-img dc-sym" style="height: 4.5vh; width: 6.5vw">
+                  <img
+                    src="new-img/dcsourceuse - Copy.png"
+                    alt=""
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+                <div class="ele-name">DC Source</div>
+              </div>
+              <div class="comp-ele">
+                <div class="ele-img ac-sym" style="height: 4.5vh; width: 6.5vw">
+                  <img
+                    src="new-img/acsourceuse - Copy.png"
+                    alt=""
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+                <div class="ele-name">AC Source</div>
+              </div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-ele">
+                <div
+                  class="ele-img swi-sym"
+                  style="height: 4.5vh; width: 6.5vw"
+                >
+                  <img
+                    src="new-img/switchuse - Copy.png"
+                    alt=""
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+                <div class="ele-name">Switch</div>
+              </div>
+              <div class="comp-ele">
+                <div
+                  class="ele-img not-sym"
+                  style="height: 4.5vh; width: 6.5vw"
+                >
+                  <img
+                    src="new-img/notuse - Copy.png"
+                    alt=""
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+                <div class="ele-name">Not Gate</div>
+              </div>
+            </div>
+
+            <div class="comp-row">
+              <div class="comp-ele">
+                <div
+                  class="ele-img ac-sym"
+                  style="
+                    height: 5.3vh;
+                    width: 6.5vw;
+                    display: flex;
+                    justify-content: center;
+                  "
+                >
+                  <img
+                    src="new-img/ammeter.png"
+                    alt=""
+                    height="100%"
+                    width="60%"
+                  />
+                </div>
+                <div class="ele-name">Ammeter</div>
+              </div>
+              <div class="comp-ele">
+                <div
+                  class="ele-img volt-sym"
+                  style="
+                    height: 5.3vh;
+                    width: 6.5vw;
+                    display: flex;
+                    justify-content: center;
+                  "
+                >
+                  <img
+                    src="new-img/vmeter.png"
+                    alt=""
+                    height="100%"
+                    width="60%"
+                  />
+                </div>
+                <div class="ele-name">Voltmeter</div>
+              </div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-ele">
+                <div
+                  class="ele-img gnd-sym"
+                  style="height: 5.3vh; width: 6.5vw"
+                >
+                  <img
+                    src="new-img/ground.png"
+                    alt=""
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+                <div class="ele-name">Ground</div>
+              </div>
+              <div class="comp-ele">
+                <div class="ele-img op-sym" style="height: 5.3vh; width: 6.5vw">
+                  <img
+                    src="new-img/opamp.png"
+                    alt=""
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+                <div class="ele-name">OP-Amp</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br /><br />
+        <div id="readings">
+          <div id="readings_subdiv">
+            <br />
+            <center><h2>Table: Experiment Readings</h2></center>
+            <br />
+            <center>
+              <table style="width: 80%">
+                <tr>
+                  <th>Load</th>
+                  <th>V<sub>avg</sub></th>
+                  <th>V<sub>rms</sub></th>
+                </tr>
+                <tr>
+                  <td>R = 12 &#8486;</td>
+                  <td>1.2</td>
+                  <td>1.5</td>
+                </tr>
+              </table>
+            </center>
+          </div>
+        </div>
+      </div>
+      <div id="mid">
+        <div id="diagram">
+          <div class="dia-row">
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="hell" id="C1-back">
+              <div class="use capacitor" id="C1">
+                <img
+                  src="new-img/capacitoruse.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="M1-back">
+              <div class="use mosfet-n other" id="M1">
+                <img
+                  src="new-img/mosfetn.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="M2-back">
+              <div class="use mosfet-n other" id="M2">
+                <img
+                  src="new-img/mosfetn.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+          </div>
+          <div class="dia-row">
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="hell" id="VM1-back">
+              <div class="use voltagem other" id="VM1">
+                <img
+                  src="new-img/vmeter.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="R1-back">
+              <div class="use resistor" id="R1">
+                <img
+                  src="new-img/resistoruse.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <dib class="blank"></dib>
+          </div>
+          <div class="dia-row">
+            <div class="hell" id="VM2-back">
+              <div class="use voltagem other" id="VM2">
+                <img
+                  src="new-img/vmeter.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="DC1-back">
+              <div class="use dcsource" id="DC1">
+                <img
+                  src="new-img/dcsourceuse.png"
+                  alt=""
+                  height="100%"
+                  width="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="GND1-back">
+              <div class="use other" id="GND1">
+                <img
+                  src="new-img/ground.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="hell" id="GND2-back">
+              <div class="use other" id="GND2">
+                <img
+                  src="new-img/ground.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="blank"></div>
+            <div class="hell" id="VM3-back">
+              <div class="use voltagem other" id="VM3">
+                <img
+                  src="new-img/vmeter.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="dia-row">
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="hell" id="C2-back">
+              <div class="use capacitor" id="C2">
+                <img
+                  src="new-img/capacitoruse.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="M3-back">
+              <div class="use mosfet-n other" id="M3">
+                <img
+                  src="new-img/mosfetn.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="M4-back">
+              <div class="use mosfet-n other" id="M4">
+                <img
+                  src="new-img/mosfetn.png"
+                  alt=""
+                  height="100%"
+                  width="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="VM4-back">
+              <div class="use voltagem other" id="VM4">
+                <img
+                  src="new-img/vmeter.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="I1-back">
+              <div class="use inductor" id="I1">
+                <img
+                  src="new-img\inductoruse.png"
+                  alt=""
+                  height="100%"
+                  width="100%"
+                />
+              </div>
+            </div>
+            <div class="blank"></div>
+          </div>
+          <div class="dia-row">
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="blank" style="width: 15vw"></div>
+            <div class="blank"></div>
+            <div class="hell" id="S1-back" style="align-items: baseline">
+              <div class="use switch other" id="S1">
+                <img
+                  src="new-img/switchuse.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="GND3-back">
+              <div class="use other" id="GND3">
+                <img
+                  src="new-img/ground.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+          </div>
+          <div class="dia-row">
+            <div class="hell" id="GND4-back">
+              <div class="use other" id="GND4">
+                <img
+                  src="new-img/ground.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="VM5-back">
+              <div class="use voltagem other" id="VM5">
+                <img
+                  src="new-img/vmeter.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="blank" style="width: 10vw"></div>
+            <div class="hell" id="S2-back">
+              <div class="use other" id="S2">
+                <img
+                  src="new-img/switchuse.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="G2-back">
+              <div
+                class="use other"
+                id="G2"
+                style="display: flex; align-items: end"
+              >
+                <img
+                  src="new-img/notuse.png"
+                  alt=""
+                  width="100%"
+                  height="90%"
+                />
+              </div>
+            </div>
+
+            <div class="blank"></div>
+            <div class="blank"></div>
+          </div>
+          <div class="dia-row">
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="hell" id="opamp1-back">
+              <div class="use other" id="opamp1">
+                <img
+                  src="new-img\opamp.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="hell" id="VM6-back">
+              <div class="use voltagem other" id="VM6">
+                <img
+                  src="new-img/vmeter.png"
+                  alt=""
+                  width="90%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="GND5-back">
+              <div class="use other" id="GND5">
+                <img
+                  src="new-img/ground.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="dia-row">
+            <div class="blank"></div>
+            <div class="hell" id="AC1-back">
+              <div class="use acsource" id="AC1">
+                <img
+                  src="new-img/acsourceuse.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="hell" id="VM7-back">
+              <div class="use voltagem other" id="VM7">
+                <img
+                  src="new-img/vmeter.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="hell" id="AC2-back">
+              <div class="use acsource" id="AC2">
+                <img
+                  src="new-img/acsourceuse.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="blank"></div>
+            <div class="blank"></div>
+          </div>
+          <div class="dia-row">
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <div class="hell" id="GND6-back">
+              <div class="use other" id="GND6">
+                <img
+                  src="new-img/ground.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+            <div class="blank"></div>
+            <div class="hell" id="GND7-back">
+              <div class="use other" id="GND7">
+                <img
+                  src="new-img/ground.png"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            </div>
+
+            <div class="blank"></div>
+
+            <div class="blank"></div>
+            <div class="blank"></div>
+          </div>
+        </div>
+      </div>
+      <div id="right">
+        <div id="buttons">
+          <div id="instdiv" class="btn-func">
+            <button id="instructions">
+              <i class="fas fa-info"></i>&nbsp Instructions
+            </button>
+          </div>
+          <div id="resetdiv" class="btn-func">
+            <button id="clear" onclick="Reset()">
+              <i class="fas fa-redo"></i>&nbsp Reset
+            </button>
+          </div>
+          <div id="checkdiv" class="btn-func">
+            <button id="check"><i class="fas fa-check"></i>&nbsp Check</button>
+          </div>
+          <div id="graphdiv" class="btn-func">
+            <button id="graph">
+              <i class="fas fa-chart-line"></i>&nbsp Graph
+            </button>
+          </div>
+          <div id="tablediv" class="btn-func">
+            <button id="data" onclick="showtable()">
+              <i class="fas fa-table"></i>&nbsp Take Readings
+            </button>
+          </div>
+          <div id="printdiv" class="btn-func">
+            <button id="print" onclick="Print()">
+              <i class="fas fa-print"></i>&nbsp Print
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="dialog" class="dialog"></div>
+
+    <div id="graphdialog" title="GRAPH">
+      <!--dialog content-->
+      <div id="container1"></div>
+      <div id="container2"></div>
+      <div id="container3"></div>
+    </div>
+    <div id="insdialog" class="insdialog">
+      <ol>
+        <li>
+          Create a valid circuit by dragging & dropping an appropriate electrial
+          components from the symbol palette <b>(Electrical Components)</b> on
+          left pane of the page.
+        </li>
+        <li>
+          After this, connect all the components with each other through
+          connector by dragging & dropping from the symbol palette.
+        </li>
+        <li>Click <b>Check</b> button to check the validity of Connections.</li>
+        <li>
+          If check connections says: <b>Correct Connections</b> move to the next
+          step else if it says: <b>wrong connections</b> then recheck your
+          ciruit until it validate the circuit.
+        </li>
+        <li>Before taking readings, click on the <b>Graph</b> button.</li>
+        <li>
+          Take readings from the table by clicking <b>Take Readings</b> button.
+        </li>
+        <li>
+          Click <b>Print</b> button, to print the full connections with graph
+          and table, if needed.
+        </li>
+        <li>Click <b>Reset</b> button and follow the steps from 2 to 6.</li>
+      </ol>
+    </div>
+    <footer id="copyright">
+      &copy; Copyright 2020 | Virtual Labs IIT Roorkee
+    </footer>
+    <script src="x1.js"></script>
+    <script src="x2.js"></script>
+    <script src="x3.js"></script>
+    <script src="old.js"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="plum.js"></script>
+    <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+      integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+
+    <script src="plum.js"></script>
+    <script>
+      var count=0;
+      var correct_connections = [
+        ["M2", "M1"],
+        ["M1", "C1"],
+        ["C1", "DC1"],
+        ["C1", "VM2"],
+        ["C1", "GND1"],
+        ["GND1", "C2"],
+        ["M1", "M3"],
+        ["M2", "M4"],
+        ["M1", "VM1"],
+        ["VM1", "GND2"],
+        ["VM1", "R1"],
+        ["R1", "I1"],
+        ["I1", "VM4"],
+        ["VM4", "GND3"],
+        ["I1", "VM3"],
+        ["R1", "VM3"],
+        ["VM4", "M4"],
+        ["M4", "S1"],
+        ["VM2", "C2"],
+        ["DC1", "C2"],
+        ["C2", "M3"],
+        ["M3", "M4"],
+        ["M1", "S1"],
+        ["M2", "S2"],
+        ["M3", "S2"],
+        ["S1", "G2"],
+        ["S2", "opamp1"],
+        ["G2", "opamp1"],
+        ["opamp1", "VM6"],
+        ["VM6", "GND5"],
+        ["opamp1", "VM7"],
+        ["VM7", "GND6"],
+        ["opamp1", "AC2"],
+        ["AC2", "GND7"],
+        ["AC1", "opamp1"],
+        ["opamp1", "VM5"],
+        ["VM5", "GND4"],
+        ["AC1", "GND7"],
+      ];
+      var resistorids = ["R1-back"];
+      var capacitorids = ["C1-back", "C2-back"];
+      var inductorids = ["I1-back"];
+      var acsourceids = ["AC1-back", "AC2-back"];
+      var groundids = [
+        "GND1-back",
+        "GND2-back",
+        "GND3-back",
+        "GND4-back",
+        "GND5-back",
+        "GND6-back",
+        "GND7-back",
+      ].reverse();
+      var voltagemids = [
+        "VM7-back",
+        "VM6-back",
+        "VM5-back",
+        "VM4-back",
+        "VM3-back",
+        "VM2-back",
+        "VM1-back",
+      ];
+      var mosfetids = ["M4-back", "M3-back", "M2-back", "M1-back"];
+      var opampids = ["opamp1-back"];
+      var switchids = ["S2-back", "S1-back"];
+      var notgateids = ["G2-back"];
+      var dcsourceids = ["DC1-back"];
+      var values = {
+        R1: {
+          name: "R1",
+          value: 0,
+          type: "Resistance: ",
+          unit: " ohm",
+        },
+        C1: {
+          name: "C1",
+          value: 0,
+          type: "Capacitance: ",
+          unit: " F",
+        },
+        C2: {
+          name: "C2",
+          value: 0,
+          type: "Capacitance: ",
+          unit: " uF",
+        },
+        I1: {
+          name: "I1",
+          value: 0,
+          type: "Inductance: ",
+          unit: " uH",
+        },
+        DC1: { name: "DC1", value: 0, type: "Voltage: ", unit: " volt" },
+        AC1: {
+          name: "AC1",
+          volt: 0,
+          freq: 0,
+          type1: "Voltage: ",
+          type2: "Frequency: ",
+          unitfreq: " Hz",
+          unit: " volt",
+        },
+        AC2: {
+          name: "AC2",
+          volt: 0,
+          freq: 0,
+          type1: "Voltage: ",
+          type: "Frequency: ",
+          unitfreq: " Hz",
+          unit: " volt",
+        },
+        M1: {
+          name: "M1",
+        },
+        M2: {
+          name: "M2",
+        },
+        VM1: {
+          name: "VM1",
+        },
+        VM2: {
+          name: "VM2",
+        },
+        GND1: {
+          name: "GND1",
+        },
+        GND2: {
+          name: "GND2",
+        },
+        VM3: { name: "VM3" },
+        M3: { name: "M3" },
+        M4: { name: "M4" },
+        VM4: { name: "VM4" },
+        S1: { name: "S1" },
+        GND3: { name: "GND3" },
+        GND4: { name: "GND4" },
+        VM5: { name: "VM5" },
+        S2: { name: "S2" },
+        G2: { name: "G2" },
+        opamp1: { name: "opamp1" },
+        VM6: { name: "VM6" },
+        GND5: { name: "GND5" },
+        VM7: { name: "VM7" },
+        GND6: { name: "GND6" },
+        GND7: { name: "GND7" },
+      };
+      var instance = jsPlumb.getInstance({});
+      instance.bind("ready", () => {
+        $("#symbolpalette .ele-img").draggable({
+          helper: "clone",
+          containment: "body",
+          appendTo: "#diagram",
+        });
+        $("#diagram").droppable({
+          drop: (event, ui) => {
+            if ($(ui.helper).hasClass("resistor-sym")) {
+              var a = resistorids.pop();
+              document.getElementById(a).style.visibility = "unset";
+            } else if ($(ui.helper).hasClass("capacitor-sym")) {
+              var a = capacitorids.pop();
+              if (a != null) {
+                document.getElementById(a).style.visibility = "unset";
+              } else {
+              }
+            } else if ($(ui.helper).hasClass("inductor-sym")) {
+              var a = inductorids.pop();
+              if (a != null) {
+                document.getElementById(a).style.visibility = "unset";
+              } else {
+              }
+            } else if ($(ui.helper).hasClass("ac-sym")) {
+              var a = acsourceids.pop();
+              if (a != null) {
+                document.getElementById(a).style.visibility = "unset";
+              } else {
+              }
+            } else if ($(ui.helper).hasClass("nom-sym")) {
+              var a = mosfetids.pop();
+              if (a != null) {
+                document.getElementById(a).style.visibility = "unset";
+              } else {
+              }
+            } else if ($(ui.helper).hasClass("dc-sym")) {
+              var a = dcsourceids.pop();
+              if (a != null) {
+                document.getElementById(a).style.visibility = "unset";
+              } else {
+              }
+            } else if ($(ui.helper).hasClass("swi-sym")) {
+              var a = switchids.pop();
+              if (a != null) {
+                document.getElementById(a).style.visibility = "unset";
+              } else {
+              }
+            } else if ($(ui.helper).hasClass("not-sym")) {
+              var a = notgateids.pop();
+              if (a != null) {
+                document.getElementById(a).style.visibility = "unset";
+              } else {
+              }
+            } else if ($(ui.helper).hasClass("volt-sym")) {
+              var a = voltagemids.pop();
+              if (a != null) {
+                document.getElementById(a).style.visibility = "unset";
+              } else {
+              }
+            } else if ($(ui.helper).hasClass("gnd-sym")) {
+              var a = groundids.pop();
+              if (a != null) {
+                document.getElementById(a).style.visibility = "unset";
+              } else {
+              }
+            } else if ($(ui.helper).hasClass("op-sym")) {
+              var a = opampids.pop();
+              if (a != null) {
+                document.getElementById(a).style.visibility = "unset";
+              } else {
+              }
+            }
+          },
+        });
+        //if (component.hasClass("jtk-connector"))
+        var gnd = {
+          endpoint: "Dot",
+          anchor: ["Top"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 1,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        };
+        var mosfet1 = {
+          anchor: ["TopRight"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 10,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        };
+        var mosfet2 = {
+          anchor: ["BottomRight"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 10,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        };
+        var mosfet3 = {
+          anchor: ["Left"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 10,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        };
+
+        var voltmet1 = {
+          anchor: ["Top"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 10,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        };
+
+        var voltmet2 = {
+          anchor: ["Bottom"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 10,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        };
+
+        var M1tr = instance.addEndpoint("M1", mosfet1);
+        var M1br = instance.addEndpoint("M1", mosfet2);
+        var M1l = instance.addEndpoint("M1", mosfet3);
+
+        var M2tr = instance.addEndpoint("M2", mosfet1);
+        var M2br = instance.addEndpoint("M2", mosfet2);
+        var M2l = instance.addEndpoint("M2", mosfet3);
+
+        var M3tr = instance.addEndpoint("M3", mosfet1);
+        var M3br = instance.addEndpoint("M3", mosfet2);
+        var M3l = instance.addEndpoint("M3", mosfet3);
+
+        var M4tr = instance.addEndpoint("M4", mosfet1);
+        var M4br = instance.addEndpoint("M4", mosfet2);
+        var M4l = instance.addEndpoint("M4", mosfet3);
+
+        var VM1T = instance.addEndpoint("VM1", voltmet1);
+        var VM1B = instance.addEndpoint("VM1", voltmet2);
+
+        var VM2T = instance.addEndpoint("VM2", voltmet1);
+        var VM2B = instance.addEndpoint("VM2", voltmet2);
+
+        var VM3T = instance.addEndpoint("VM3", voltmet1);
+        var VM3B = instance.addEndpoint("VM3", voltmet2);
+
+        var VM4T = instance.addEndpoint("VM4", voltmet1);
+        var VM4B = instance.addEndpoint("VM4", voltmet2);
+
+        var VM5T = instance.addEndpoint("VM5", voltmet1);
+        var VM5B = instance.addEndpoint("VM5", voltmet2);
+
+        var VM6T = instance.addEndpoint("VM6", voltmet1);
+        var VM6B = instance.addEndpoint("VM6", voltmet2);
+
+        var VM7T = instance.addEndpoint("VM7", voltmet1);
+        var VM7B = instance.addEndpoint("VM7", voltmet2);
+
+        var GND1 = instance.addEndpoint("GND1", {
+          endpoint: "Dot",
+          anchor: ["Top"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 2,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        });
+        var GND2 = instance.addEndpoint("GND2", gnd);
+        var GND3 = instance.addEndpoint("GND3", gnd);
+        var GND4 = instance.addEndpoint("GND4", gnd);
+        var GND5 = instance.addEndpoint("GND5", gnd);
+        var GND6 = instance.addEndpoint("GND6", gnd);
+        var GND7 = instance.addEndpoint("GND7", {
+          endpoint: "Dot",
+          anchor: ["Top"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 2,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        });
+
+        var AC1T = instance.addEndpoint("AC1", voltmet1);
+        var AC1B = instance.addEndpoint("AC1", voltmet2);
+
+        var AC2T = instance.addEndpoint("AC2", voltmet1);
+        var AC2B = instance.addEndpoint("AC2", voltmet2);
+
+        var SW1T = instance.addEndpoint("S1", voltmet1);
+        var SW1B = instance.addEndpoint("S1", voltmet2);
+
+        var SW2T = instance.addEndpoint("S2", voltmet1);
+        var SW2B = instance.addEndpoint("S2", voltmet2);
+
+        var G2T = instance.addEndpoint("G2", voltmet1);
+        var G2B = instance.addEndpoint("G2", voltmet2);
+
+        var DC1T = instance.addEndpoint("DC1", voltmet1);
+        var DC1B = instance.addEndpoint("DC1", voltmet2);
+
+        var R1T = instance.addEndpoint("R1", voltmet1);
+        var R1B = instance.addEndpoint("R1", voltmet2);
+
+        var C1T = instance.addEndpoint("C1", voltmet1);
+        var C1B = instance.addEndpoint("C1", voltmet2);
+
+        var C2T = instance.addEndpoint("C2", voltmet1);
+        var C2B = instance.addEndpoint("C2", voltmet2);
+
+        var I1T = instance.addEndpoint("I1", voltmet1);
+        var I1B = instance.addEndpoint("I1", voltmet2);
+
+        var OPR = instance.addEndpoint("opamp1", {
+          endpoint: "Dot",
+          anchor: ["Right"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 10,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        });
+
+        var OPLT = instance.addEndpoint("opamp1", {
+          endpoint: "Dot",
+          anchor: ["TopLeft"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 10,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        });
+
+        var OPLB = instance.addEndpoint("opamp1", {
+          endpoint: "Dot",
+          anchor: ["BottomLeft"],
+          isSource: true,
+          isTarget: true,
+          connector: "Flowchart",
+          maxConnections: 10,
+          connectorStyle: { strokeStyle: "#100" },
+          paintStyle: { fillStyle: "#42100e" },
+          hoverPaintStyle: { fillStyle: "black" },
+        });
+
+        instance.bind("connection", (conn) => {
+          var flag = true;
+          let eg1 = [String(conn.sourceId), String(conn.targetId)];
+
+          for (var ele of correct_connections) {
+            
+            if (
+              (ele[0] == eg1[0] && ele[1] == eg1[1]) ||
+              (ele[0] == eg1[1] && ele[1] == eg1[0])
+            ) {
+              flag = false;
+              count=count+1
+            }
+          }
+          if (flag) {
+            instance.detach(conn);
+          }
+        });
+
+        // context menu for resistor
+        $("body").on("contextmenu", "#diagram .resistor", function (event) {
+          event.preventDefault();
+          window.selectedControl = $(this).attr("id");
+
+          $(
+            '<div class="custom-menu"><div class="name-element"><label for="name-' +
+              window.selectedControl +
+              '">Name:</label><input type="text"  id="name-' +
+              window.selectedControl +
+              '" style="border-radius: 20px" placeholder="   ' +
+              values[window.selectedControl]["name"] +
+              '" onchange="changeName(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)"/></div><div    class="value-element" style="display: flex; align-items: center; margin: 2px"><label for="value-' +
+              window.selectedControl +
+              '" id="value-dis-' +
+              window.selectedControl +
+              '">Resistance: ' +
+              values[window.selectedControl]["value"] +
+              ' ohm</label><input type="range"  id="value-"  onchange="changeValue(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)" />  </div><div style="display: flex; justify-content: end; padding-right: 13px"><button id="submit" style="border-radius: 20px">Set Value</button></div>'
+          )
+            .appendTo("body")
+            .css({ top: event.pageY + "px", left: event.pageX + "px" });
+
+          //context menu for capacitor
+
+          $("#submit").bind("click", function (event) {
+            $("div.custom-menu").remove();
+          });
+        });
+        //context menu for capacitor
+        $("body").on("contextmenu", "#diagram .capacitor", function (event) {
+          event.preventDefault();
+          window.selectedControl = $(this).attr("id");
+          console.log(window.selectedControl);
+          $(
+            '<div class="custom-menu"><div class="name-element"><label for="name-' +
+              window.selectedControl +
+              '">Name:</label><input type="text"  id="name-' +
+              window.selectedControl +
+              '" style="border-radius: 20px" placeholder="   ' +
+              values[window.selectedControl]["name"] +
+              '" onchange="changeName(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)"/></div><div    class="value-element" style="display: flex; align-items: center; margin: 2px"><label for="value-' +
+              window.selectedControl +
+              '" id="value-dis-' +
+              window.selectedControl +
+              '">Capacitance: ' +
+              values[window.selectedControl]["value"] +
+              ' uF</label><input type="range"  id="value-"  onchange="changeValue(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)" />  </div><div style="display: flex; justify-content: end; padding-right: 13px"><button id="submit" style="border-radius: 20px">Set Value</button></div>'
+          )
+            .appendTo("body")
+            .css({ top: event.pageY + "px", left: event.pageX + "px" });
+          $("#submit").bind("click", function (event) {
+            $("div.custom-menu").remove();
+          });
+        });
+
+        // contextmenu for inductor
+        $("body").on("contextmenu", "#diagram .inductor", function (event) {
+          event.preventDefault();
+          window.selectedControl = $(this).attr("id");
+          console.log(window.selectedControl);
+          $(
+            '<div class="custom-menu"><div class="name-element"><label for="name-' +
+              window.selectedControl +
+              '">Name:</label><input type="text"  id="name-' +
+              window.selectedControl +
+              '" style="border-radius: 20px" placeholder="   ' +
+              values[window.selectedControl]["name"] +
+              '" onchange="changeName(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)"/></div><div    class="value-element" style="display: flex; align-items: center; margin: 2px"><label for="value-' +
+              window.selectedControl +
+              '" id="value-dis-' +
+              window.selectedControl +
+              '">Inductance: ' +
+              values[window.selectedControl]["value"] +
+              ' uH</label><input type="range"  id="value-"  onchange="changeValue(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)" />  </div><div style="display: flex; justify-content: end; padding-right: 13px"><button id="submit" style="border-radius: 20px">Set Value</button></div>'
+          )
+            .appendTo("body")
+            .css({ top: event.pageY + "px", left: event.pageX + "px" });
+          $("#submit").bind("click", function (event) {
+            $("div.custom-menu").remove();
+          });
+        });
+
+        // Thyristor
+        $("body").on("contextmenu", "#diagram .thyris", function (event) {
+          event.preventDefault();
+          window.selectedControl = $(this).attr("id");
+          console.log(window.selectedControl);
+          $(
+            '<div class="custom-menu"><div class="name-element"><label for="name-' +
+              window.selectedControl +
+              '">Name:</label><input type="text"  id="name-' +
+              window.selectedControl +
+              '" style="border-radius: 20px" placeholder="   ' +
+              values[window.selectedControl]["name"] +
+              '" onchange="changeName(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)"/></div><div    class="value-element" style="display: flex; align-items: center; margin: 2px"><label for="value-' +
+              window.selectedControl +
+              '" id="value-dis-' +
+              window.selectedControl +
+              '">Firing angle:</label><input type="range"  id="value-"  onchange="changeValue(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)" />  </div><div style="display: flex; justify-content: end; padding-right: 13px"><button id="submit" style="border-radius: 20px">Set Value</button></div>'
+          )
+            .appendTo("body")
+            .css({ top: event.pageY + "px", left: event.pageX + "px" });
+          $("#submit").bind("click", function (event) {
+            $("div.custom-menu").remove();
+          });
+        });
+        //AC Source
+        $("body").on("contextmenu", "#diagram .acsource", function (event) {
+          event.preventDefault();
+          window.selectedControl = $(this).attr("id");
+          console.log(window.selectedControl);
+          $(
+            '<div class="custom-menu"><div class="name-element"><label for="name-' +
+              window.selectedControl +
+              '">Name:</label><input type="text" id="name-' +
+              window.selectedControl +
+              '" style="border-radius: 20px;" placeholder="    ' +
+              values[window.selectedControl]["name"] +
+              '" onchange="changeName(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)"/></div><div class="value-element" style="display: flex;align-items: center;margin: 2px;"><label for="value-volt-' +
+              window.selectedControl +
+              '" id="value-dis-volt-' +
+              window.selectedControl +
+              '">Voltage:' +
+              values[window.selectedControl]["volt"] +
+              ' volt</label><input type="range" id="value-volt-' +
+              window.selectedControl +
+              '" onchange="vlotEnter(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)" min="0" max="250" /></div><div style="display: flex;align-items: center;margin: 2px;"><label for="value-freq-' +
+              window.selectedControl +
+              '" id="value-dis-freq-' +
+              window.selectedControl +
+              '">Frequence:' +
+              values[window.selectedControl]["freq"] +
+              '</label><input type="range" id="value-freq-' +
+              window.selectedControl +
+              ' Hz" min="0" max="100" onchange="freqEnter(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)"/></div><div style="display: flex; justify-content: end;padding-right: 13px;"><button id="submit" style="border-radius: 20px;">Set Value</button></div></div>'
+          )
+            .appendTo("body")
+            .css({ top: event.pageY + "px", left: event.pageX + "px" });
+          $("#submit").bind("click", function (event) {
+            $("div.custom-menu").remove();
+          });
+        });
+
+        //dc source
+        $("body").on("contextmenu", "#diagram .dcsource", function (event) {
+          event.preventDefault();
+          window.selectedControl = $(this).attr("id");
+          console.log(window.selectedControl);
+          $(
+            '<div class="custom-menu"><div class="name-element"><label for="name-' +
+              window.selectedControl +
+              '">Name:</label><input type="text"  id="name-' +
+              window.selectedControl +
+              '" style="border-radius: 20px" placeholder="   ' +
+              values[window.selectedControl]["name"] +
+              '" onchange="changeName(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)"/></div><div    class="value-element" style="display: flex; align-items: center; margin: 2px"><label for="value-' +
+              window.selectedControl +
+              '" id="value-dis-' +
+              window.selectedControl +
+              '">Voltage: ' +
+              values[window.selectedControl]["value"] +
+              ' volt</label><input type="range"  id="value-"  onchange="changeValue(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)" />  </div><div style="display: flex; justify-content: end; padding-right: 13px"><button id="submit" style="border-radius: 20px">Set Value</button></div>'
+          )
+            .appendTo("body")
+            .css({ top: event.pageY + "px", left: event.pageX + "px" });
+          $("#submit").bind("click", function (event) {
+            $("div.custom-menu").remove();
+          });
+        });
+        $("body").on("contextmenu", "#diagram .other", function (event) {
+          event.preventDefault();
+          window.selectedControl = $(this).attr("id");
+
+          $(
+            '<div class="custom-menu"><div class="name-element"><label for="name-' +
+              window.selectedControl +
+              '">Name:</label><input type="text"  id="name-' +
+              window.selectedControl +
+              '" style="border-radius: 20px" placeholder="   ' +
+              values[window.selectedControl]["name"] +
+              '" onchange="changeName(' +
+              "'" +
+              window.selectedControl +
+              "'" +
+              ',this.value)"/></div><button id="submit" style="border-radius: 20px">Set Value</button></div>'
+          )
+            .appendTo("body")
+            .css({ top: event.pageY + "px", left: event.pageX + "px" });
+          $("#submit").bind("click", function (event) {
+            $("div.custom-menu").remove();
+          });
+        });
+      });
+      function vlotEnter(no, value) {
+        values[no]["volt"] = value;
+        var name = "value-dis-volt-" + no;
+        var ele = document.getElementById(name);
+        ele.innerHTML = values[no]["type1"] + " " + value + values[no]["unit"];
+      }
+      function freqEnter(no, value) {
+        values[no]["freq"] = value;
+        var name = "value-dis-freq-" + no;
+        var ele = document.getElementById(name);
+        ele.innerHTML =
+          values[no]["type1"] + " " + value + values[no]["unitfreq"];
+      }
+      function changeName(name, value) {
+        values[name]["name"] = value;
+      }
+      function changeValue(no, value) {
+        console.log(no);
+        values[no]["value"] = value;
+        var name = "value-dis-" + no;
+        var ele = document.getElementById(name);
+        ele.innerHTML = values[no]["type"] + " " + value + values[no]["unit"];
+      }
+    </script>
+    <script>
+      $(document).ready(function () {
+        $("#data").on("click", function () {
+          $("#readings").show();
+        });
+      });
+      document.getElementById("check").addEventListener("click",()=>{
+        if(count!=38){
+          alert("Incomplete Connections");
+        }else{
+          alert("All Connections Connected")
+        }
+      });
+    </script>
+  </body>
+</html>
